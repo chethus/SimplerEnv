@@ -70,10 +70,11 @@ ENVIRONMENT_MAP = {
 }
 
 
-def make(task_name):
+def make(task_name, obs_mode="rgbd", **extra_kwargs):
     """Creates simulated eval environment from task name."""
     assert task_name in ENVIRONMENTS, f"Task {task_name} is not supported. Environments: \n {ENVIRONMENTS}"
     env_name, kwargs = ENVIRONMENT_MAP[task_name]
     kwargs["prepackaged_config"] = True
-    env = gym.make(env_name, obs_mode="rgbd", **kwargs)
+    kwargs.update(extra_kwargs)
+    env = gym.make(env_name, obs_mode=obs_mode, **kwargs)
     return env

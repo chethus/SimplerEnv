@@ -21,7 +21,7 @@ from simpler_env.utils.env.observation_utils import get_image_from_maniskill2_ob
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--policy", default="rt1", choices=["rt1", "octo-base", "octo-small"])
+parser.add_argument("--policy", default="rt1", choices=["rt1", "octo-base", "octo-small", "openvla", "ecot"])
 parser.add_argument(
     "--ckpt-path",
     type=str,
@@ -75,6 +75,12 @@ elif "octo" in args.policy:
     from simpler_env.policies.octo.octo_model import OctoInference
 
     model = OctoInference(model_type=args.ckpt_path, policy_setup=policy_setup, init_rng=0)
+elif "openvla" in args.policy:
+    from simpler_env.policies.openvla.openvla_model import OpenVLAInference
+    model = OpenVLAInference("iliad9.stanford.edu")
+elif "ecot" in args.policy:
+    from simpler_env.policies.openvla.openvla_model import OpenVLAInference
+    model = OpenVLAInference("iliad9.stanford.edu", 8888)
 else:
     raise NotImplementedError()
 
